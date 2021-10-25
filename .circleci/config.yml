@@ -1,0 +1,21 @@
+orbs: # declare what orbs we are going to use
+    node: circleci/node@2.0.2 # the node orb provides common node-related configuration
+
+version: 2.1 # using 2.1 provides access to orbs and other features
+
+jobs:
+    test:
+        docker:
+            - image: cimg/node:16.8.0
+        steps:
+          #think of this as a function that will run when invoked below
+            - checkout
+            # checkout is specific to circleci and means that it will pull the code and make sure everything is downloaded that it needs to run.
+            - run: npm install
+            - run: npm run test
+
+workflows:
+    app-tests:
+        jobs:
+            - test 
+            #this refers to "test" under jobs above and it invokes those steps. it will then run any test files in your project.
